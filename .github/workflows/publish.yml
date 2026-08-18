@@ -1,0 +1,50 @@
+name: Publish
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: ${{ matrix.rid }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rid:
+          - win-x64
+          - linux-x64
+          - linux-arm64
+          - linux-arm
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Publish self-contained executable
+        run: >-
+          dotnet publish SDR-Relay.csproj
+          --configuration Release
+          --runtime ${{ matrix.rid }}
+          --self-contained true
+          --output publish/${{ matrix.rid }}
+
+      - name: Pack executable
+        run: >-
+          tar -czf SDR-Relay-${{ matrix.rid }}.tar.gz
+          -C publish/${{ matrix.rid }} .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SDR-Relay-${{ matrix.rid }}
+          path: SDR-Relay-${{ matrix.rid }}.tar.gz
+          if-no-files-found: error

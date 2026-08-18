@@ -239,9 +239,9 @@ public sealed class SdrRelayService : BackgroundService
             return 0;
         }
 
-        Array.Reverse(bytes);
-
-        return BitConverter.ToUInt32(bytes, 0);
+        // The SDR protobuf field stores an IPv4 address in network byte order.
+        // Read it explicitly so the result is identical on x86, ARM and ARM64.
+        return BinaryPrimitives.ReadUInt32BigEndian(bytes);
     }
 
     private static uint UnixNow()
