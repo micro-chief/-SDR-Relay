@@ -252,6 +252,10 @@ SKYNET already reads `sdr-relays.ini`, but automatic generation of this file is
 not implemented yet. The example file must currently be created or updated
 manually.
 
+> [!NOTE]
+> `sdr-relays.ini` is included in this repository temporarily as a manually maintained configuration example. Once automatic relay configuration generation and distribution are implemented in SKYNET, this file will be removed to prevent duplicated or outdated configuration.
+
+
 ## Network topology requirement
 
 The relay and the primary server endpoint must not share the same effective
