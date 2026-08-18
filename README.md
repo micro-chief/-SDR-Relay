@@ -17,6 +17,11 @@ and AppID `1422450`.
 | `linux-x64` | Linux x86-64 |
 | `linux-arm64` | 64-bit ARM Linux, including Raspberry Pi with a 64-bit OS |
 | `linux-arm` | 32-bit ARM Linux where .NET 8 is supported |
+> [!WARNING]
+> **Android ARM64 is experimental and is not a native supported target.**
+>
+> The `linux-arm64` build cannot run directly on stock Android. It may run inside an ARM64 Debian or Ubuntu environment using Termux and PRoot without CPU emulation, but this configuration is not covered by automated testing. Android background execution, battery optimization and network restrictions may interrupt the relay. A dedicated Android APK and foreground service will be required for reliable native deployment.
+
 
 For Raspberry Pi and other new ARM deployments, use a 64-bit operating system
 and the `linux-arm64` build. The ARM targets are produced automatically, but
