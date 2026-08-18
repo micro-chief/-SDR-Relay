@@ -14,11 +14,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rid:
-          - win-x64
-          - linux-x64
-          - linux-arm64
-          - linux-arm
+        include:
+          - rid: win-x64
+            archive: zip
+          - rid: linux-x64
+            archive: tar.gz
+          - rid: linux-arm64
+            archive: tar.gz
+          - rid: linux-arm
+            archive: tar.gz
 
     steps:
       - name: Check out source
@@ -37,14 +41,26 @@ jobs:
           --self-contained true
           --output publish/${{ matrix.rid }}
 
-      - name: Pack executable
+      - name: Prepare package directory
+        run: |
+          mkdir -p package/SDR-Relay
+          cp -a "publish/${{ matrix.rid }}/." package/SDR-Relay/
+
+      - name: Pack Windows executable
+        if: matrix.archive == 'zip'
+        run: |
+          cd package
+          zip -r "../SDR-Relay-${{ matrix.rid }}.zip" SDR-Relay
+
+      - name: Pack Linux executable
+        if: matrix.archive == 'tar.gz'
         run: >-
           tar -czf SDR-Relay-${{ matrix.rid }}.tar.gz
-          -C publish/${{ matrix.rid }} .
+          -C package SDR-Relay
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: SDR-Relay-${{ matrix.rid }}
-          path: SDR-Relay-${{ matrix.rid }}.tar.gz
+          path: SDR-Relay-${{ matrix.rid }}.${{ matrix.archive }}
           if-no-files-found: error
