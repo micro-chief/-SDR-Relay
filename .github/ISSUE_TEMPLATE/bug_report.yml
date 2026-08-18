@@ -1,0 +1,118 @@
+name: Bug report
+description: Report a reproducible problem with SDR-Relay
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a problem.
+
+        **Do not use this form for security vulnerabilities.** Report them privately through the repository's [Security advisories](https://github.com/micro-chief/-SDR-Relay/security/advisories/new).
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checks
+      options:
+        - label: I reproduced the problem with the latest `master` revision or latest successful artifact.
+          required: true
+        - label: I searched existing issues and did not find the same report.
+          required: true
+        - label: This report does not contain credentials, tokens, private addresses or personal data.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Select the target on which SDR-Relay was running.
+      options:
+        - Windows x64 (`win-x64`)
+        - Linux x64 (`linux-x64`)
+        - Linux ARM64 (`linux-arm64`)
+        - Linux ARM32 (`linux-arm`)
+        - Android ARM64 through Termux/PRoot (experimental)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Revision or artifact
+      description: Provide the commit SHA or exact artifact name.
+      placeholder: "Example: 48c0a17 or SDR-Relay-linux-arm64"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and device
+      description: Include the OS version, architecture and device model when relevant.
+      placeholder: "Example: Raspberry Pi OS 64-bit, Raspberry Pi 4"
+    validations:
+      required: true
+
+  - type: textarea
+    id: topology
+    attributes:
+      label: Network topology
+      description: Describe the client, relay and primary endpoint placement without exposing private information.
+      placeholder: "Example: client on LAN -> separate ARM64 relay on Ethernet -> primary endpoint on another host"
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Relevant configuration
+      description: Paste only sanitized SDR settings. Remove public addresses, credentials and other sensitive values.
+      render: ini
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest reliable sequence that reproduces the problem.
+      placeholder: |
+        1. Start SDR-Relay with ...
+        2. Start SKYNET with ...
+        3. Send or receive ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Paste relevant logs after removing addresses, identifiers and sensitive data.
+      render: text
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add packet captures, screenshots or other context only when they contain no sensitive data.
+

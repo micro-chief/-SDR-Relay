@@ -1,0 +1,87 @@
+name: Feature request
+description: Suggest an improvement to SDR-Relay
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve SDR-Relay. Describe the problem first, then the proposed solution.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checks
+      options:
+        - label: I searched existing issues and did not find the same request.
+          required: true
+        - label: This request is related to SDR-Relay rather than an unrelated third-party service.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - SDR protocol support
+        - Platform or deployment support
+        - Configuration
+        - Diagnostics and logging
+        - Build and release automation
+        - SKYNET integration
+        - Android experiment
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What limitation or use case should this request address?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior or interface you would like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe workarounds or alternative approaches you considered.
+
+  - type: textarea
+    id: benefit
+    attributes:
+      label: Expected benefit
+      description: Explain who benefits and how the change improves SDR-Relay.
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation notes
+      description: Add relevant protocol, platform or compatibility details. Do not include proprietary or sensitive material.
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Contribution availability
+      description: Would you be interested in implementing or testing this request?
+      options:
+        - I can implement it
+        - I can help test it
+        - I can provide additional technical information
+        - I am only proposing the idea
+    validations:
+      required: true
+

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/micro-chief/-SDR-Relay/security/advisories/new
+    about: Report suspected security vulnerabilities privately instead of opening a public issue.
