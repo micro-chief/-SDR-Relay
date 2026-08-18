@@ -348,7 +348,11 @@ verify the firewall and NAT configuration.
 
 ## Disclaimer
 
-This repository is an experimental compatibility and research project. It is
-not affiliated with, endorsed by, or sponsored by Valve Corporation. Steam,
-Steam Datagram Relay and SteamNetworkingSockets are trademarks or properties of
-their respective owners.
+This project is an independent compatibility and research project.
+
+The MIT License applies only to the original source code authored for this
+repository. Third-party protocols, names, trademarks, specifications and
+generated definitions remain the property of their respective owners.
+
+This project is not affiliated with, endorsed by, or sponsored by Valve
+Corporation.
