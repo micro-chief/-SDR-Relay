@@ -10,20 +10,55 @@ public sealed class SdrRelayService : BackgroundService
     private const byte MsgRouterPingRequest = 1;
     private const byte MsgRouterPingReply = 2;
 
+    private readonly string _popId;
+    private readonly string _peerPopId;
+    private readonly uint _peerPingMs;
+
     private readonly ILogger<SdrRelayService> _logger;
     private readonly int _port;
     private ulong _challenge;
 
     public SdrRelayService(
-        IConfiguration configuration,
-        ILogger<SdrRelayService> logger)
+    IConfiguration configuration,
+    ILogger<SdrRelayService> logger)
     {
         _logger = logger;
-        _port = int.TryParse(configuration["Sdr:RelayPort"], out var p)
-            ? p
-            : 28009;
+
+        _port = int.TryParse(
+            configuration["Sdr:RelayPort"],
+            out var p)
+                ? p
+                : 28009;
+
+        _popId =
+            configuration["Sdr:PopId"]
+            ?? "sk2";
+
+        _peerPopId =
+            configuration["Sdr:PeerPopId"]
+            ?? "sky";
+
+        _peerPingMs =
+            uint.TryParse(
+                configuration["Sdr:PeerPingMs"],
+                out var ping)
+                    ? ping
+                    : 1;
 
         _challenge = 1;
+    }
+
+    private static uint MakePopId(string code)
+    {
+        uint value = 0;
+
+        for (int i = 0; i < code.Length && i < 4; i++)
+        {
+            value <<= 8;
+            value |= (byte)code[i];
+        }
+
+        return value;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -53,8 +88,11 @@ public sealed class SdrRelayService : BackgroundService
         }
 
         _logger.LogInformation(
-            "SDR relay listening on UDP 0.0.0.0:{Port}",
-            _port);
+    "SDR relay POP {PopId} listening on UDP 0.0.0.0:{Port}; peer={PeerPopId} ping={Ping}ms",
+    _popId,
+    _port,
+    _peerPopId,
+    _peerPingMs);
 
         var buffer = new byte[4096];
         var remote = new IPEndPoint(IPAddress.Any, 0);
@@ -142,8 +180,20 @@ public sealed class SdrRelayService : BackgroundService
         var reply = new CMsgSteamDatagramRouterPingReply
         {
             ClientTimestamp = clientTimestamp,
+
+            LatencyDatacenterIds = new[]
+    {
+        MakePopId(_peerPopId)
+    },
+
+            LatencyPingMs = new[]
+    {
+        _peerPingMs
+    },
+
             YourPublicIp = PublicIp(sender.Address),
             YourPublicPort = (uint)sender.Port,
+
             ServerTime = UnixNow(),
             Challenge = challenge,
             ClientCookie = clientCookie
