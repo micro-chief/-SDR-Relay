@@ -74,15 +74,13 @@ a physical 32-bit ARM device.
 ├── Program.cs
 ├── SdrRelayService.cs
 ├── SDR-Relay.csproj
-├── appsettings.json
-└── sdr-relays.ini
+└── appsettings.json
 ```
 
 - `Program.cs` starts the .NET Worker Service.
 - `SdrRelayService.cs` contains the UDP SDR implementation.
 - `Generated/` contains protobuf-generated C# types.
 - `appsettings.json` configures the relay process.
-- `sdr-relays.ini` is an example of the configuration consumed by SKYNET.
 
 ## Download a ready-to-run build
 
@@ -228,7 +226,6 @@ $env:Sdr__PopId = "arm"
 
 ## SKYNET configuration
 
-SKYNET can advertise custom SDR POPs and endpoints using `sdr-relays.ini`.
 
 Example:
 
@@ -262,14 +259,6 @@ Ping=1
 
 Use an address reachable by the client. Do not advertise `127.0.0.1` for a
 relay running on another host.
-
-SKYNET already reads `sdr-relays.ini`, but automatic generation of this file is
-not implemented yet. The example file must currently be created or updated
-manually.
-
-> [!NOTE]
-> `sdr-relays.ini` is included in this repository temporarily as a manually maintained configuration example. Once automatic relay configuration generation and distribution are implemented in SKYNET, this file will be removed to prevent duplicated or outdated configuration.
-
 
 ## Network topology requirement
 
@@ -357,7 +346,6 @@ verify the firewall and NAT configuration.
 - more complete Steam Datagram Relay protocol handling
 - multi-POP configuration and diagnostics
 - SKYNET GC integration
-- automatic `sdr-relays.ini` generation
 - validation on physical ARM32 hardware
 
 ## Related projects
