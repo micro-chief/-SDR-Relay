@@ -1,3 +1,5 @@
+[![Publish](https://github.com/micro-chief/-SDR-Relay/actions/workflows/publish.yml/badge.svg)](https://github.com/micro-chief/-SDR-Relay/actions/workflows/publish.yml)
+
 # SKYNET SDR Relay
 
 Minimal, cross-platform Steam Datagram Relay compatibility service for SKYNET
