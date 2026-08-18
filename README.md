@@ -24,7 +24,6 @@ and AppID `1422450`.
 >
 > The `linux-arm64` build cannot run directly on stock Android. It may run inside an ARM64 Debian or Ubuntu environment using Termux and PRoot without CPU emulation, but this configuration is not covered by automated testing. Android background execution, battery optimization and network restrictions may interrupt the relay. A dedicated Android APK and foreground service will be required for reliable native deployment.
 
-
 For Raspberry Pi and other new ARM deployments, use a 64-bit operating system
 and the `linux-arm64` build. The ARM targets are produced automatically, but
 validation on physical ARM hardware is still in progress.
@@ -32,6 +31,20 @@ validation on physical ARM hardware is still in progress.
 The service is managed .NET code and does not use architecture-specific native
 libraries. Framework-dependent builds use `AnyCPU`; self-contained builds
 include the runtime and native launcher for the selected target.
+
+## Tested environments
+
+| Environment | Runtime | Status |
+| --- | --- | --- |
+| Windows x86-64 PC | `win-x64` | Tested |
+| Debian 12 x86-64 in VirtualBox | `linux-x64` | Tested |
+| Raspberry Pi with a 64-bit OS | `linux-arm64` | Tested on physical hardware |
+| 32-bit ARM Linux device | `linux-arm` | Build available, not tested on physical hardware |
+| Android ARM64 with Termux/PRoot | `linux-arm64` | Not tested and not officially supported |
+
+The `linux-arm64` build has been validated on physical Raspberry Pi hardware.
+The `linux-arm` build is produced automatically but has not yet been tested on
+a physical 32-bit ARM device.
 
 ## Current capabilities
 
@@ -345,7 +358,7 @@ verify the firewall and NAT configuration.
 - multi-POP configuration and diagnostics
 - SKYNET GC integration
 - automatic `sdr-relays.ini` generation
-- validation on physical ARM64 and ARM32 hardware
+- validation on physical ARM32 hardware
 
 ## Related projects
 
